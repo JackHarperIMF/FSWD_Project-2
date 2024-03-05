@@ -22,12 +22,39 @@
 </head>
 <body>
 
-  <!-- Extra Button -->
+  <!-- MobileScreen Button -->
     <div class="mobile_screen_btn">
       <button class="btn btn-primary" type="submit" data-bs-toggle="modal" data-bs-target="#AddModal">
         <span class="pe-2"><i class="fa-solid fa-plus"></i></span> New Task
       </button>
     </div>
+
+    <!-- Open Task Modal -->
+    <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#OpenTaskModal">
+      Open Task
+    </button>
+    
+    <div class="modal fade" id="OpenTaskModal" tabindex="-1" aria-labelledby="OpenTaskLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="OpenTaskLabel">Modal title</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+          <div class="modal-body taskModal_body">
+            
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+
+        </div>
+      </div>
+    </div> -->
     
     <!-- Add New Modal -->
     <div class="modal fade" id="AddModal" tabindex="-1" aria-labelledby="AddModalLabel" aria-hidden="true">
@@ -42,23 +69,23 @@
             <form>
               <div class="mb-3">
                 <label for="imageInput" class="form-label">Image URL</label>
-                <input type="email" class="form-control" id="imageInput" aria-describedby="imageHelp">
+                <input type="url" class="form-control" id="imageInput" aria-describedby="imageHelp">
                 <div id="imageHelp" class="form-text">Optional</div>
               </div>
 
               <div class="mb-3">
-                <label for="TitleInput" class="form-label">Task Title</label>
-                <input type="email" class="form-control" id="TitleInput" placeholder="">
+                <label for="titleInput" class="form-label">Task Title</label>
+                <input type="text" class="form-control" id="titleInput" placeholder="Name your task" required>
               </div>
 
               <div class="mb-3">
-                <label for="TypeInput" class="form-label">Task Type</label>
-                <input type="email" class="form-control" id="TypeInput" placeholder="Categorize Your Tasks">
+                <label for="Tagtype" class="form-label">Tags</label>
+                <input type="text" class="form-control" id="Tagtype" placeholder="Categorize Your Tasks">
               </div>
 
               <div class="mb-3">
-                <label for="Description" class="form-label">Task Description</label>
-                <textarea type="email" class="form-control" id="Description" placeholder="Write your Description..."></textarea>
+                <label for="taskDescription" class="form-label">Task Description</label>
+                <textarea type="text" class="form-control" id="taskDescription" placeholder="Write a Description..." required></textarea>
               </div>
 
             </form>
@@ -66,7 +93,7 @@
 
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-primary" >Save changes</button>
           </div>
 
         </div>
@@ -97,6 +124,7 @@
       </div>
     </nav>
 
+    <!-- Search Bar -->
     <section class="container">
       <div class="mt-4">
         <div class="row justify-content-center">
@@ -104,7 +132,6 @@
             <div class="input-group my-4 shadow-lg flex-nowrap">
               <input type="text" class="form-control" placeholder="Search For Tasks...">
               <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
-              
             </div>
           </div>
         </div>
@@ -112,9 +139,14 @@
       </div>
     </section>
 
+    <section class="mt-4">
+      <div class="row task_contents"></div>
+    </section>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
+    <script src="index.js"></script>
 </body>
 </html>
 
