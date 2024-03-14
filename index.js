@@ -69,7 +69,7 @@ const loadInititalData = () => {
     })
 }
 
-const cardInput = (event) => {
+const handleInput = (event) => {
     const id = ` ${Date.now()} `;
     const input = {
         url: document.getElementById('imageInput').value,
