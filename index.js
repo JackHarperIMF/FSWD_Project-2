@@ -1,13 +1,13 @@
-const card = {
+//Store all Tasks in this list.
+const state = {
     taskList: [],
 }
 
-//Using Document Object Model: document represents the entire web page, through this js can access and modify the html code
-const taskContents = document.querySelector(".task_contents");
+const taskContents = document.querySelector(".task__contents");
 const taskModal = document.querySelector(".taskModal_body");
 
-//The HTML code written inside a js is enquoted with `` (backticks) and when accessing js content in html code we use ${}
-const TaskCard = ({url, title, tag, description, id}) => `
+//This creates a Card everytime with the values from the user  
+const createCard = ({url, title, tag, description, id}) => `
     <div class="col-md-6 col-lg-4 mt-3 ms-3" id=${id} key=${id}>
         <div class="card shadow-sm custom__card">
             <div class="card-header d-flex justify-content-end">
@@ -17,8 +17,9 @@ const TaskCard = ({url, title, tag, description, id}) => `
             </div>
 
             <div class="card-body">
-                ${ url &&
-                    `<img src= ${url}  class="card-img-top" alt="task image" width="100%" md-3 rounded-lg/>`
+                ${ url ?
+                    `<img src= ${url}  class="card-img-top" alt="task image" width="100%" md-3 rounded-lg/>`:
+                    `<img width="100%" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQeJQeJyzgAzTEVqXiGe90RGBFhfp_4RcJJMQ&usqp=CAU" alt="card image top" class="card-img-top md-3 rounded-lg" />`
                 }
                 <h4 class="card-title"> ${title} </h4>
                 <p class="card-text trim-2-lines text-muted"> ${description}</p>
@@ -32,23 +33,60 @@ const TaskCard = ({url, title, tag, description, id}) => `
     </div>
 `
 
-const ModalContent = ({url, title, type, description, id}) => {
-    // parseInt === (Ex: "06032024 16:55" into a int type, it cannot convert "hello" into int return NaN)
+
+const modalContent = ({url, title, type, description, id}) => {
+    //Getting Timestamp in int
     const date = new Date(parseInt(id));  
     return `
         <div id=${id}>
-            ${ url &&
-                `<img src= ${url}  class="img-fluid" alt="task image" md-3 rounded/>`
+            ${ url ?
+                `<img src= ${url}  class="img-fluid" alt="task image" md-3 rounded/>` :
+                `<img src=src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQeJQeJyzgAzTEVqXiGe90RGBFhfp_4RcJJMQ&usqp=CAU" class="img-fluid" alt="card default" md-3 rounded/>`
             }
             // convert back to string to display it 
             <strong> Created on ${date.toDateString} </strong>
             <h2 class="my-3">${title}</h2>
-            <p class="lead>${description}</p>
+            <p class="lead">${description}</p>
         </div>
     `
 }
 
-const UpdateLocalMemory = () => {
-    localStorage.setItem("task", JSON.stringify({tasks: card.taskList}))
+//Update tasks in local storage to avoid losing info on tasks
+const UpdatelocalStorage = () => {
+    localStorage.setItem("task", JSON.stringify({tasks: state.taskList}));
+}
 
+//Load the stored data on refreshing the page
+const loadInititalData = () => {
+    const localStorageCopy = JSON.parse(localStorage.task);
+    
+    //Put them into the Task list
+    if(localStorageCopy) state.taskList = localStorageCopy.tasks;
+
+    //From LocalStorage to Creating Card
+    state.taskList.map((content)=>{
+        taskContents.insertAdjacentHTML("beforeend", createCard(content))
+    })
+}
+
+const cardInput = (event) => {
+    const id = ` ${Date.now()} `;
+    const input = {
+        url: document.getElementById('imageInput').value,
+        title: document.getElementById('titleInput').value,
+        tag: document.getElementById('Tagtype').value,
+        description: document.getElementById('taskDescription').value,
+    };
+
+    //check that fields are not empty
+    if(value.title === "" || value.tag === "" || value.description === ""){
+        return alert("Please fill the required fields");
+    }
+
+    //Give the input values to function
+    taskContents.insertAdjacentElement("beforeend", createCard({...input, id}));
+
+    //update it into Tasklist and localStorage
+    state.taskList.push({...input, id});
+    UpdatelocalStorage();
 }
